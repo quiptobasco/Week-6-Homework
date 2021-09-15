@@ -7,7 +7,19 @@ function generateWeather(city) {
     var currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + key;
 
     //ajax function to get data from openweathermap api
-    $.ajax({ url: currentWeatherURL, method: "GET" }).then(function(response) {
+    $.ajax({ url: currentWeatherURL, method: "GET" }).done(function(response, jqXHR) {
+        console.log(response);
+
+        var searchedCities = JSON.parse(localStorage.getItem("city")) || [];
+        if (searchedCities.indexOf(city) == -1) {
+            searchedCities.unshift(city);
+            if (searchedCities.length > 8) {
+                searchedCities.pop();
+        }
+        localStorage.setItem("city", JSON.stringify(searchedCities));
+        displayCities();
+        }
+
         //set variables based on api call response
         var temperature = (convertToF(response.main.temp)).toFixed(2);
         var wind = response.wind.speed;
@@ -28,7 +40,7 @@ function generateWeather(city) {
         var forecastURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly&appid=" + key;
 
         //ajax function to call api
-        $.ajax({ url: forecastURL, method: "GET"}).then(function(response) {
+        $.ajax({ url: forecastURL, method: "GET"}).done(function(response) {
             //get current uv index from api response and change it's color based on result
             var uv = response.current.uvi;
             var color = "";
@@ -58,6 +70,13 @@ function generateWeather(city) {
                 $("#humidity-" + i).text("Humidity: " + response.daily[i].humidity + " %");
             }
         });
+        //if no results returned, alert!
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status == 404) {
+            alert("Search Returned no results...Did you spell something wrong?");
+        } else {
+            alert("Some other error.  Try again.");
+        }
     });
 }
 
@@ -89,20 +108,12 @@ $(".saved-city").click(function(event) {
 $(".button-search").click(function(event) {
     event.preventDefault();
     var city = $("#city-input").val().trim();
-    var searchedCities = JSON.parse(localStorage.getItem("city")) || [];
 
     if (city === null || city === "") {
         alert("You must enter a city name");
     } else {
         generateWeather(city);
-        if (searchedCities.indexOf(city) == -1) {
-            searchedCities.unshift(city);
-            if (searchedCities.length > 8) {
-                searchedCities.pop();
-            }
-            localStorage.setItem("city", JSON.stringify(searchedCities));
-            displayCities();
-        }
+
     }
 })
 
