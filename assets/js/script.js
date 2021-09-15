@@ -7,9 +7,7 @@ function generateWeather(city) {
     var currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + key;
 
     //ajax function to get data from openweathermap api
-    $.ajax({ url: currentWeatherURL, method: "GET" }).done(function(response, jqXHR) {
-        console.log(response);
-
+    $.ajax({ url: currentWeatherURL, method: "GET" }).done(function(response) {
         var searchedCities = JSON.parse(localStorage.getItem("city")) || [];
         if (searchedCities.indexOf(city) == -1) {
             searchedCities.unshift(city);
@@ -71,7 +69,7 @@ function generateWeather(city) {
             }
         });
         //if no results returned, alert!
-    }).fail(function(jqXHR, textStatus, errorThrown) {
+    }).fail(function(jqXHR) {
         if (jqXHR.status == 404) {
             alert("Search Returned no results...Did you spell something wrong?");
         } else {
