@@ -1,0 +1,73 @@
+.jumbotron  {
+    text-align: center;
+    border-radius: 0;
+    padding: 2px;
+    background-image: linear-gradient(to right, blue, black);    
+}
+
+.jumbotron h1 {
+    font-weight: bold;
+    color: white;
+}
+
+
+.btn {
+    background-color: lightsteelblue;
+    color: black;
+    width: 252px;
+    height: 40px;
+}
+
+.form-control {
+    width: 252px;
+}
+
+h5,h6 {
+    font-weight: bold;
+}
+
+
+.col-sm .card div {
+    text-align: center;
+    font-size: 0.9em;
+    font-weight: bolder;  
+}
+
+.col-sm .card p {
+    font-size: 0.8em;
+    color: white;
+    font-weight: bold;
+}
+
+h5 {
+    color: black;
+    font-size: 20px;
+}
+
+.card-body, #five-day-forecast {
+    padding: 1px 0 1px 10px;
+    margin: -30px -150px 25px 0 ;
+}
+
+.col-sm-3 {
+    margin: -30px  25px 9px ;
+}
+
+.five-day-forecast-cards {
+    background-color: lightslategray;
+    color: white !important;
+}
+ 
+#city-input {
+  padding: 20px ;
+}
+
+.weather-icons {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#current-uv {
+    color: white;
+}
